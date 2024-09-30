@@ -1,7 +1,3 @@
-# Problemas encontrados:
-# 1. el acumulador "ContadorVaciosM" y "ContadorVaciosV" no disminuyen cuando se alquila un espacio
-# 2. error al registrar una salida para motos 
-
 # Fuciones faltantes:
 # implentear las tarifas
 # implemntar el reloj
@@ -15,11 +11,17 @@ PlacaM = ["Vacio"for i in range (1,26)]
 
 # Muestra el parqueadero
 def mostrar_Parqueadero():
+    print ("---------------------------Zona de Vehiculos---------------------------")
     for i in range(0, len(parqueaderoV), 10):
         print(parqueaderoV[i:i+10])
-    print(" ")
+    print ("-----------------------------------------------------------------------")
+    print("")
+    
+    print ("-----------------------------Zona de Motos-----------------------------")
     for i in range(0, len(parqueaderoM), 10):
         print(parqueaderoM[i:i+10])
+    print ("-----------------------------------------------------------------------")
+    print("")
         
         
 # Alquila Vehiculos      
@@ -29,13 +31,23 @@ def AlquilarParqueaderoV(NumPlaca):
             print("el espacio ", parqueaderoV[i], "ha sido alquilado por el vehiculo de placa ", NumPlaca)
             parqueaderoV[i] = "A"
             break
+        
+    for i in range(len(PlacaV)):
+        if PlacaV[i] == "Vacio":
+            PlacaV[i] = NumPlaca
+            break
               
 # Alquila motos     
 def AlquilarParqueaderoM(NumPlaca):
     for i in range(len(parqueaderoM)):
         if parqueaderoM[i] !="A" and parqueaderoM[i] !="O":
-            print("el espacio ", parqueaderoV[i], "ha sido alquilado por la moto de placa ", NumPlaca)
+            print("el espacio ", parqueaderoM[i], "ha sido alquilado por la moto de placa ", NumPlaca)
             parqueaderoM[i] = "A"
+            break
+        
+    for i in range(len(PlacaM)):
+        if PlacaM[i] == "Vacio":
+            PlacaM[i] = NumPlaca
             break
         
 # Registro de entrada para Vehiculos
@@ -131,11 +143,14 @@ def Estado():
             
     
 opcion = 0
-while opcion!=7:
+while opcion!=8:
     print("1. Mostrar Parqueadero")
     print("2. Alquilar")
     print("3. Registrar Entrada")
-    print("4. Registrar Salida")
+    print("5. Registrar Salida")
+    print("6. Facturar (No disponible)")
+    print("7. Informar de ocupacion")
+    print("8. Salir")
 
     opcion = int(input("elija una opcion: "))
     
