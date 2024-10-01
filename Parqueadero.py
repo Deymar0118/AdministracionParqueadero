@@ -1,13 +1,17 @@
-# Fuciones faltantes:
-# implentear las tarifas
-# implemntar el reloj
-# calcular el precio por espacio
+import datetime
 
 parqueaderoV = ["v" + str(i) for i in range(1, 51)]
 parqueaderoM = ["m" + str(i) for i in range(1, 26)]
 
 PlacaV = ["Vacio" for i in range (1,51)]
 PlacaM = ["Vacio"for i in range (1,26)]
+
+HoraEntrada = datetime.datetime.now()
+HoraSalida = datetime.datetime.now()
+Resultado = HoraSalida - HoraEntrada
+HoraTotal = Resultado.total_seconds() /3600
+
+#Valor del tiempo de ocupacion por hor = $3000
 
 # Muestra el parqueadero
 def mostrar_Parqueadero():
@@ -56,6 +60,7 @@ def RegistrarEntradaV(NumPlaca):
         if parqueaderoV[i] !="A" and parqueaderoV[i] !="O":
             print("el espacio ", parqueaderoV[i], "ha sido alquilado por el vehiculo de placa ", NumPlaca)
             parqueaderoV[i] = "O"
+            print("Hora de Entrada: ", HoraEntrada)
             break
         
     for i in range(len(PlacaV)):
@@ -69,6 +74,7 @@ def RegistrarEntradaM(NumPlaca):
         if parqueaderoM[i] !="A" and parqueaderoM[i] !="O":
             print("el espacio ", parqueaderoM[i], "ha sido alquilado por la moto de placa ", NumPlaca)
             parqueaderoM[i] = "O"
+            print("Hora de Entrada: ", HoraEntrada)
             break
         
     for i in range(len(PlacaM)):
@@ -83,7 +89,7 @@ def RegistrarSalidaV(NumPlaca):
             PlacaV [i] = "Vacio"
             parqueaderoV [i] = "v"+ str(i+1)
             print("Vehiculo despachado")
-            
+                      
 # Registro de salida para Motos
 def RegistrarSalidaM(NumPlaca):
     for i in range(len(parqueaderoM)):
@@ -144,21 +150,24 @@ def Estado():
     
 opcion = 0
 while opcion!=8:
+    print("REGISTRO DE TRANSPORTE DEL PARQUEADERO")
     print("1. Mostrar Parqueadero")
     print("2. Alquilar")
     print("3. Registrar Entrada")
+    print("4. Actualizar (No disponible)")
     print("5. Registrar Salida")
     print("6. Facturar (No disponible)")
     print("7. Informar de ocupacion")
     print("8. Salir")
+    print("-------------------------------------")
 
-    opcion = int(input("elija una opcion: "))
+    opcion = int(input("Elija una opcion: "))
     
     match opcion:
         case 1:
             mostrar_Parqueadero()
         case 2:
-            Placa = int (input("ingrese la placa: "))
+            Placa = int (input("Ingrese la placa: "))
             
             print("Tipo de trasporte ")
             print("1. Vehiculo (v)")
@@ -172,9 +181,9 @@ while opcion!=8:
                 AlquilarParqueaderoM(Placa)
                 
             if TipoTransporte != "m" and TipoTransporte != "v":
-                print ("opcion invalida. ingrese otra opcion")
+                print ("opcion invalida. Ingrese otra opcion")
         case 3:
-            Placa = str (input("ingrese la placa: "))
+            Placa = str (input("Ingrese la placa: "))
             
             print("Tipo de trasporte ")
             print("1. Vehiculo (v)")
@@ -188,9 +197,9 @@ while opcion!=8:
                 RegistrarEntradaM(Placa)
                 
             if TipoTransporte != "m" and TipoTransporte != "v":
-                print ("opcion invalida. ingrese otra opcion")
-        case 4:
-            Placa = str (input("ingrese la placa: "))
+                print ("Opcion invalida. Ingrese otra opcion")
+        case 5:
+            Placa = str (input("Ingrese la placa: "))
             
             print("Tipo de trasporte ")
             print("1. Vehiculo (v)")
@@ -202,6 +211,8 @@ while opcion!=8:
                 
             if TipoTransporte =="m":
                 RegistrarSalidaM(Placa)
-        case 5:
+        case 7:
             Estado()
+        case 8:
+            print("Finalizando el programa. Hasta luego.")
             
