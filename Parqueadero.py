@@ -6,13 +6,8 @@ parqueaderoM = ["m" + str(i) for i in range(1, 26)]
 PlacaV = ["Vacio" for i in range (1,51)]
 PlacaM = ["Vacio"for i in range (1,26)]
 
-HorarioEntradaV =["Sin Fecha" for i in range (1,51)]
-HorarioEntradaM = ["Sin Fecha" for i in range(1,26)]
-
-HoraEntrada = datetime.datetime.now()
-HoraSalida = datetime.datetime.now()
-Resultado = HoraSalida - HoraEntrada
-HoraTotal = Resultado.total_seconds() /3600
+HorarioEntradaV =[0 for i in range (1,51)]
+HorarioEntradaM = [0 for i in range(1,26)]
 
 #Valor del tiempo de ocupacion por hor = $3000
 
@@ -36,10 +31,6 @@ def AlquilarParqueaderoV(NumPlaca):
         if parqueaderoV[i] !="A" and parqueaderoV[i] !="O":
             print("el espacio ", parqueaderoV[i], "ha sido alquilado por el vehiculo de placa ", NumPlaca)
             parqueaderoV[i] = "A"
-            break
-        
-    for i in range(len(PlacaV)):
-        if PlacaV[i] == "Vacio":
             PlacaV[i] = NumPlaca
             break
               
@@ -49,13 +40,9 @@ def AlquilarParqueaderoM(NumPlaca):
         if parqueaderoM[i] !="A" and parqueaderoM[i] !="O":
             print("el espacio ", parqueaderoM[i], "ha sido alquilado por la moto de placa ", NumPlaca)
             parqueaderoM[i] = "A"
-            break
-        
-    for i in range(len(PlacaM)):
-        if PlacaM[i] == "Vacio":
             PlacaM[i] = NumPlaca
             break
-        
+            
 # Registro de entrada para Vehiculos
 def RegistrarEntradaV(NumPlaca):
     for i in range(len(parqueaderoV)):
@@ -63,7 +50,7 @@ def RegistrarEntradaV(NumPlaca):
             print("el espacio ", parqueaderoV[i], "ha sido alquilado por el vehiculo de placa ", NumPlaca)
             parqueaderoV[i] = "O"
             PlacaV[i] = NumPlaca
-            HorarioEntradaV[i] = datetime.datetime.now().strftime("%H:%M")
+            HorarioEntradaV[i] = datetime.datetime.now()
             break
                   
 # Registro de entrada para Motos
@@ -73,27 +60,39 @@ def RegistrarEntradaM(NumPlaca):
             print("el espacio ", parqueaderoM[i], "ha sido alquilado por la moto de placa ", NumPlaca)
             parqueaderoM[i] = "O"
             PlacaM[i] = NumPlaca     
-            HorarioEntradaM[i] = datetime.datetime.now().strftime("%H:%M")
+            HorarioEntradaM[i] = datetime.datetime.now()
             break
             
 # Registro de salida para Vehiculos
 def RegistrarSalidaV(NumPlaca):
     for i in range(len(parqueaderoV)):
         if PlacaV [i] == NumPlaca:
+            HorarioSalidaV = datetime.datetime.now()
+            print("Hora de salida: ",HorarioSalidaV)
+            CantidadHoras = float (( HorarioSalidaV - HorarioEntradaV[i]).total_seconds()/3600)
+            HorasRedondeadas =round(CantidadHoras,3)
+            print("Horas ocupadas: ", HorasRedondeadas)
+            
+            print("Vehiculo despachado")
             PlacaV [i] = "Vacio"
             parqueaderoV [i] = "v"+ str(i+1)
-            HorarioEntradaV [i] = "Sin Fecha"
-            print("Vehiculo despachado")
+            HorarioEntradaV [i] = 0
                       
 # Registro de salida para Motos
 def RegistrarSalidaM(NumPlaca):
     for i in range(len(parqueaderoM)):
-        if PlacaM [i] == NumPlaca:
+        if PlacaM [i] == NumPlaca: 
+            HorarioSalidaM = datetime.datetime.now()
+            print("Hora de salida: ",HorarioSalidaM)
+            CantidadHoras = ( HorarioSalidaM - HorarioEntradaM[i]).total_Seconds()/3600
+            HorasRedondeadas =round(CantidadHoras,3)
+            print("Horas ocupadas: ", HorasRedondeadas)
+            
+            print("Moto despachada")
             PlacaM [i] = "Vacio"
             parqueaderoM [i] = "m"+ str(i+1)
-            HorarioEntradaM [i] = "Sin Fecha"
-            print("Moto despachada")
-
+            HorarioEntradaM [i] = 0
+            
 # muestra el estado de los espacios del parqueadero          
 def Estado():
     print ("-------Zona de Vehiculos-------")
@@ -158,7 +157,6 @@ while opcion!=8:
     print("-------------------------------------")
 
     opcion = int(input("Elija una opcion: "))
-    
     match opcion:
         case 1:
             mostrar_Parqueadero()
@@ -211,4 +209,3 @@ while opcion!=8:
             Estado()
         case 8:
             print("Finalizando el programa. Hasta luego.")
-            
