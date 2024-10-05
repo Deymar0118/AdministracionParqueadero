@@ -3,6 +3,9 @@ import datetime
 parqueaderoV = ["v" + str(i) for i in range(1, 51)]
 parqueaderoM = ["m" + str(i) for i in range(1, 26)]
 
+MatrizV = ["v" + str(i) for i in range(1, 51)]
+MatrizM = ["m" + str(i) for i in range(1, 26)]
+
 PlacaV = ["Vacio" for i in range (1,51)]
 PlacaM = ["Vacio"for i in range (1,26)]
 
@@ -10,6 +13,20 @@ HorarioEntradaV =[0 for i in range (1,51)]
 HorarioEntradaM = [0 for i in range(1,26)]
 
 #Valor del tiempo de ocupacion por hor = $3000
+
+def mostrar_Matriz():
+    print("                         Matriz del Parqueadero                        ")
+    print ("---------------------------Zona de Vehiculos---------------------------")
+    for i in range(0, len(MatrizV), 10):
+        print(MatrizV[i:i+10])
+    print ("-----------------------------------------------------------------------")
+    print("")
+    
+    print ("-----------------------------Zona de Motos-----------------------------")
+    for i in range(0, len(MatrizM), 10):
+        print(MatrizM[i:i+10])
+    print ("-----------------------------------------------------------------------")
+    print("") 
 
 # Muestra el parqueadero
 def mostrar_Parqueadero():
@@ -33,6 +50,8 @@ def AlquilarParqueaderoV(NumPlaca):
             parqueaderoV[i] = "A"
             PlacaV[i] = NumPlaca
             break
+        else:
+            print("El parqueadero esta lleno")
               
 # Alquila motos     
 def AlquilarParqueaderoM(NumPlaca):
@@ -42,6 +61,8 @@ def AlquilarParqueaderoM(NumPlaca):
             parqueaderoM[i] = "A"
             PlacaM[i] = NumPlaca
             break
+        else:
+            print("El parqueadero esta lleno")
             
 # Registro de entrada para Vehiculos
 def RegistrarEntradaV(NumPlaca):
@@ -52,6 +73,8 @@ def RegistrarEntradaV(NumPlaca):
             PlacaV[i] = NumPlaca
             HorarioEntradaV[i] = datetime.datetime.now()
             break
+        else:
+            print("El parqueadero esta lleno")
                   
 # Registro de entrada para Motos
 def RegistrarEntradaM(NumPlaca):
@@ -62,6 +85,8 @@ def RegistrarEntradaM(NumPlaca):
             PlacaM[i] = NumPlaca     
             HorarioEntradaM[i] = datetime.datetime.now()
             break
+        else:
+            print("El parqueadero esta lleno")
             
 # Registro de salida para Vehiculos
 def RegistrarSalidaV(NumPlaca):
@@ -77,6 +102,8 @@ def RegistrarSalidaV(NumPlaca):
             PlacaV [i] = "Vacio"
             parqueaderoV [i] = "v"+ str(i+1)
             HorarioEntradaV [i] = 0
+        else:
+            print("El vehiculo no se encuentra en el parqueadero")
                       
 # Registro de salida para Motos
 def RegistrarSalidaM(NumPlaca):
@@ -92,6 +119,8 @@ def RegistrarSalidaM(NumPlaca):
             PlacaM [i] = "Vacio"
             parqueaderoM [i] = "m"+ str(i+1)
             HorarioEntradaM [i] = 0
+        else:
+            print("La moto no se encuentra en el parqueadero")
             
 # muestra el estado de los espacios del parqueadero          
 def Estado():
@@ -146,7 +175,7 @@ def Estado():
 opcion = 0
 while opcion!=8:
     print("REGISTRO DE TRANSPORTE DEL PARQUEADERO")
-    print("1. Mostrar Parqueadero")
+    print("1. Mostrar  Matriz del Parqueadero")
     print("2. Alquilar")
     print("3. Registrar Entrada")
     print("4. Actualizar")
@@ -159,7 +188,7 @@ while opcion!=8:
     opcion = int(input("Elija una opcion: "))
     match opcion:
         case 1:
-            mostrar_Parqueadero()
+            mostrar_Matriz()
         case 2:
             Placa = str (input("Ingrese la placa: "))
             
