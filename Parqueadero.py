@@ -149,7 +149,7 @@ while opcion!=8:
     print("1. Mostrar Parqueadero")
     print("2. Alquilar")
     print("3. Registrar Entrada")
-    print("4. Actualizar (No disponible)")
+    print("4. Actualizar")
     print("5. Registrar Salida")
     print("6. Facturar (No disponible)")
     print("7. Informar de ocupacion")
@@ -192,6 +192,8 @@ while opcion!=8:
                 
             if TipoTransporte != "m" and TipoTransporte != "v":
                 print ("Opcion invalida. Ingrese otra opcion")
+        case 4:
+            mostrar_Parqueadero()
         case 5:
             Placa = str (input("Ingrese la placa: "))
             
