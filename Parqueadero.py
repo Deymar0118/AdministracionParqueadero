@@ -3,126 +3,151 @@ import datetime
 parqueaderoV = ["v" + str(i) for i in range(1, 51)]
 parqueaderoM = ["m" + str(i) for i in range(1, 26)]
 
-MatrizV = ["v" + str(i) for i in range(1, 51)]
-MatrizM = ["m" + str(i) for i in range(1, 26)]
+PlacaV = ["Vacio" for i in range(1,51)]
+PlacaM = ["Vacio" for i in range(1,26)]
 
-PlacaV = ["Vacio" for i in range (1,51)]
-PlacaM = ["Vacio"for i in range (1,26)]
+horaEntradaV = ["Vacio" for i in range(1,51)]
+horaSalidaV = ["Vacio" for i in range(1,51)]
 
-HorarioEntradaV =[0 for i in range (1,51)]
-HorarioEntradaM = [0 for i in range(1,26)]
+horaEntradaM = ["Vacio" for i in range(1,26)]
+horaSalidaM = ["Vacio" for i in range(1,26)]
 
-#Valor del tiempo de ocupacion por hor = $3000
+# NOTA: Valor del tiempo de ocupacion por hora = $3000
+precio_por_hora = 3000
 
-def mostrar_Matriz():
+# Muestra la matriz del parqueader
+def mostrar_Matriz(): 
+    MatrizV = ["v" + str(i) for i in range(1, 51)]
+    MatrizM = ["m" + str(i) for i in range(1, 26)]
     print("                         Matriz del Parqueadero                        ")
     print ("---------------------------Zona de Vehiculos---------------------------")
     for i in range(0, len(MatrizV), 10):
         print(MatrizV[i:i+10])
-    print ("-----------------------------------------------------------------------")
-    print("")
+    print ("-----------------------------------------------------------------------\n")
     
     print ("-----------------------------Zona de Motos-----------------------------")
     for i in range(0, len(MatrizM), 10):
         print(MatrizM[i:i+10])
-    print ("-----------------------------------------------------------------------")
-    print("") 
+    print ("-----------------------------------------------------------------------\n") 
 
-# Muestra el parqueadero
+# Mostrar parqueadero con ocupación actual
 def mostrar_Parqueadero():
     print ("---------------------------Zona de Vehiculos---------------------------")
     for i in range(0, len(parqueaderoV), 10):
         print(parqueaderoV[i:i+10])
-    print ("-----------------------------------------------------------------------")
-    print("")
+    print ("-----------------------------------------------------------------------\n")
     
     print ("-----------------------------Zona de Motos-----------------------------")
     for i in range(0, len(parqueaderoM), 10):
         print(parqueaderoM[i:i+10])
-    print ("-----------------------------------------------------------------------")
-    print("")      
-        
-# Alquila Vehiculos      
+    print ("-----------------------------------------------------------------------\n")      
+
+# Alquilar vehículo
 def AlquilarParqueaderoV(NumPlaca):
-    for i in range(len(parqueaderoV)):
-        if parqueaderoV[i] !="A" and parqueaderoV[i] !="O":
-            print("el espacio ", parqueaderoV[i], "ha sido alquilado por el vehiculo de placa ", NumPlaca)
+    for i in range(len(PlacaV)):
+        if parqueaderoV[i] == "O" and PlacaV[i] == NumPlaca:
+            print("El espacio ha sido alquilado por el vehículo de placa", NumPlaca)
             parqueaderoV[i] = "A"
             PlacaV[i] = NumPlaca
             break
         else:
-            print("El parqueadero esta lleno")
-              
-# Alquila motos     
+            print("ATENCION: Primero tiene que registrar una hora de entrada")
+            break
+
+# Alquilar moto
 def AlquilarParqueaderoM(NumPlaca):
-    for i in range(len(parqueaderoM)):
-        if parqueaderoM[i] !="A" and parqueaderoM[i] !="O":
-            print("el espacio ", parqueaderoM[i], "ha sido alquilado por la moto de placa ", NumPlaca)
+    for i in range(len(PlacaM)):
+        if PlacaM[i] == "O" and PlacaM[i] == NumPlaca:
+            print("El espacio ha sido alquilado por la moto de placa", NumPlaca)
             parqueaderoM[i] = "A"
             PlacaM[i] = NumPlaca
             break
         else:
-            print("El parqueadero esta lleno")
-            
-# Registro de entrada para Vehiculos
+            print("ATENCION: Primero tiene que registrar una hora de entrada")
+            break
+
+# Registrar entrada de vehículo
 def RegistrarEntradaV(NumPlaca):
     for i in range(len(parqueaderoV)):
-        if parqueaderoV[i] !="A" and parqueaderoV[i] !="O":
-            print("el espacio ", parqueaderoV[i], "ha sido alquilado por el vehiculo de placa ", NumPlaca)
-            parqueaderoV[i] = "O"
+        if parqueaderoV[i] != "A" and parqueaderoV[i] != "O":  
             PlacaV[i] = NumPlaca
-            HorarioEntradaV[i] = datetime.datetime.now()
+            horaEntradaV[i] = input("Ingrese la hora de entrada (HH:MM): ")
+            print("El espacio", parqueaderoV[i], " ha sido ocupado por el vehículo de placa ", NumPlaca)
+            parqueaderoV[i] = "O"
             break
         else:
             print("El parqueadero esta lleno")
-                  
-# Registro de entrada para Motos
+            
+# Registrar entrada de moto
 def RegistrarEntradaM(NumPlaca):
     for i in range(len(parqueaderoM)):
-        if parqueaderoM[i] !="A" and parqueaderoM[i] !="O":
-            print("el espacio ", parqueaderoM[i], "ha sido alquilado por la moto de placa ", NumPlaca)
+        if parqueaderoM[i] != "A" and parqueaderoM[i] != "O":
             parqueaderoM[i] = "O"
-            PlacaM[i] = NumPlaca     
-            HorarioEntradaM[i] = datetime.datetime.now()
+            PlacaM[i] = NumPlaca
+            horaEntradaM[i] = input("Ingrese la hora de entrada (HH:MM): ")
+            print("El espacio", parqueaderoM[i] ,"ha sido ocupado por la moto de placa", NumPlaca)
             break
         else:
-            print("El parqueadero esta lleno")
-            
-# Registro de salida para Vehiculos
+            print("El parqueadero está lleno")
+
+# Registrar salida de vehículo
 def RegistrarSalidaV(NumPlaca):
-    for i in range(len(parqueaderoV)):
-        if PlacaV [i] == NumPlaca:
-            HorarioSalidaV = datetime.datetime.now()
-            print("Hora de salida: ",HorarioSalidaV)
-            CantidadHoras = float (( HorarioSalidaV - HorarioEntradaV[i]).total_seconds()/3600)
-            HorasRedondeadas =round(CantidadHoras,3)
-            print("Horas ocupadas: ", HorasRedondeadas)
-            
-            print("Vehiculo despachado")
-            PlacaV [i] = "Vacio"
-            parqueaderoV [i] = "v"+ str(i+1)
-            HorarioEntradaV [i] = 0
+    for i in range(len(PlacaV)):
+        if PlacaV[i] == NumPlaca:
+            horaSalidaV[i] = input("Ingrese la hora de salida (HH:MM): ")
+            break
         else:
-            print("El vehiculo no se encuentra en el parqueadero")
-                      
-# Registro de salida para Motos
+            print("Vehículo no encontrado en el parqueadero")
+
+# Registrar salida de moto
 def RegistrarSalidaM(NumPlaca):
-    for i in range(len(parqueaderoM)):
-        if PlacaM [i] == NumPlaca: 
-            HorarioSalidaM = datetime.datetime.now()
-            print("Hora de salida: ",HorarioSalidaM)
-            CantidadHoras = ( HorarioSalidaM - HorarioEntradaM[i]).total_Seconds()/3600
-            HorasRedondeadas =round(CantidadHoras,3)
-            print("Horas ocupadas: ", HorasRedondeadas)
-            
-            print("Moto despachada")
-            PlacaM [i] = "Vacio"
-            parqueaderoM [i] = "m"+ str(i+1)
-            HorarioEntradaM [i] = 0
+    for i in range(len(PlacaM)):
+        if PlacaM[i] == NumPlaca:
+            horaSalidaM[i] = input("Ingrese la hora de salida (HH:MM): ")
+            break
         else:
-            print("La moto no se encuentra en el parqueadero")
-            
-# muestra el estado de los espacios del parqueadero          
+            print("Moto no encontrada en el parqueadero")
+
+# Calcular precio
+def calcular_precio(hora_entrada, hora_salida):
+    formato = "%H:%M"
+    entrada = datetime.datetime.strptime(hora_entrada, formato)
+    salida = datetime.datetime.strptime(hora_salida, formato)
+    horas_ocupadas = (salida - entrada).total_seconds() / 3600
+
+    total = horas_ocupadas * precio_por_hora
+
+    # Definir el horario diurno de 6am a 10pm
+    hora_inicio_diurna = datetime.datetime.strptime("06:00", formato)
+    hora_fin_diurna = datetime.datetime.strptime("22:00", formato)
+    
+    if entrada >= hora_inicio_diurna and salida <= hora_fin_diurna and horas_ocupadas >= (16 * 0.7):  # 70% de una jornada de 16 horas
+        total *= 0.85  # Aplicar el 15% de descuento
+
+    return horas_ocupadas, total
+
+# Facturar
+def Facturar(NumPlaca, tipo_transporte):
+    if tipo_transporte == "v":
+        for i in range(len(PlacaV)):
+            if PlacaV[i] == NumPlaca:
+                if horaEntradaV[i] != "Vacio" and horaSalidaV[i] != "Vacio":
+                    horas, total = calcular_precio(horaEntradaV[i], horaSalidaV[i])
+                    print("El vehículo con placa ", NumPlaca, " estuvo ", horas, " horas. Total a pagar: $", total)
+                else:
+                    print("Debe registrar una hora de entrada y salida.")
+                break
+    elif tipo_transporte == "m":
+        for i in range(len(PlacaM)): 
+            if PlacaM[i] == NumPlaca:
+                if horaEntradaM[i] != "Vacio" and horaSalidaM[i] != "Vacio":
+                    horas, total = calcular_precio(horaEntradaM[i], horaSalidaM[i])
+                    print("La moto con placa ", NumPlaca, " estuvo ", horas, " horas. Total a pagar: $", total)
+                else:
+                    print("Debe registrar una hora de entrada y salida.")
+                break
+
+# Estado del parqueadero
 def Estado():
     print ("-------Zona de Vehiculos-------")
     contadorAlquiladosV =0
@@ -171,21 +196,22 @@ def Estado():
     contadorVaciosM =0
     print ("---------------------------")
     print("")
-            
+
+# Menú principal
 opcion = 0
-while opcion!=8:
+while opcion != 8:
     print("REGISTRO DE TRANSPORTE DEL PARQUEADERO")
     print("1. Mostrar  Matriz del Parqueadero")
     print("2. Alquilar")
-    print("3. Registrar Entrada")
+    print("3. Registrar Hora de Entrada")
     print("4. Actualizar")
-    print("5. Registrar Salida")
-    print("6. Facturar (No disponible)")
-    print("7. Informar de ocupacion")
+    print("5. Registrar Hora de Salida")
+    print("6. Facturar (no disponible)")
+    print("7. Informar ocupacion")
     print("8. Salir")
     print("-------------------------------------")
 
-    opcion = int(input("Elija una opcion: "))
+    opcion = int(input("Elija una opción: "))
     match opcion:
         case 1:
             mostrar_Matriz()
@@ -236,6 +262,14 @@ while opcion!=8:
                 
             if TipoTransporte =="m":
                 RegistrarSalidaM(Placa)
+        case 6:
+            Placa = str (input("Ingrese la placa: "))
+            
+            print("Tipo de trasporte ")
+            print("1. Vehiculo (v)")
+            print("2. Moto (m)")
+            TipoTransporte = input("Ingrese una opción (v/m): ").lower()
+            Facturar(Placa, TipoTransporte)
         case 7:
             Estado()
         case 8:
